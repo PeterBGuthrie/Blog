@@ -1,0 +1,164 @@
+﻿@model Blog.Models.BlogPost
+@using Microsoft.AspNet.Identity
+
+
+<!--If else for the purpose of displaying uploaded photo has Banner image -->
+@if (Model.MediaPath != null)
+{
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Model.MediaPath')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>@Model.Title </h1>
+                        <h2 class="subheading">@Model.Abstract</h2>
+                        <span class="meta">
+                            Posted by
+                            <a href="#">Peter B. Guthrie</a>
+                            on
+                            @Model.Created.ToString("MMM dd, yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container-fluid page-body-wrapper">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    @Html.Raw(Model.Body)
+                    @*@if (Model.MediaPath != null)
+                        {
+                            <img class="img-responsive" src="@Model.MediaPath" alt="" />
+                        }*@
+                </div>
+            </div>
+        </div>
+    </article>
+}
+else
+{
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/img/detailsview.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>@Model.Title </h1>
+                        <h2 class="subheading">@Model.Abstract</h2>
+                        <span class="meta">
+                            Posted by
+                            <a href="#">Peter B. Guthrie</a>
+                            on
+                            @Model.Created.ToString("MMM dd, yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    @Html.Raw(Model.Body)
+                    <!--Testing code for image displaying-->
+                    @*@if (Model.MediaPath != null)
+                    {
+                        <img class="img-responsive" src="@Model.MediaPath" alt="" />
+                    }*@
+                </div>
+            </div>
+        </div>
+    </article>
+}
+
+<div class="Container-fluid page-body-wrapper">
+
+
+    <div class="col-lg-10 offset-1">
+        <hr />
+        <b>Discussion:</b>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <bold> Would you like to post a Comment?</bold>
+            <i>
+                @Html.ActionLink("Log In ", "Login", "Account", null, new { @class = "" })
+                @Html.ActionLink("Register", "Register", "Account", null, new { @class = "" })
+            </i>
+
+        }
+        <hr />
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+            {
+                <div class="card">
+                    @*TODO: Avatar*@
+                    @*<img class="card-img-top" src="..." alt="Card image cap">*@
+                    <div class="card-header">
+                        @comment.Author.DisplayName
+                        <br />
+                        <bold class="text-muted">@comment.Created</bold>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" id="comment-@comment.Id">@Html.Raw(comment.commentBody)</p>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            <hr />
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <a type="button" class="btn btn-warning" href="@Url.Action("Edit","Comments", new {id = comment.Id})">Edit Comment</a>
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle btn-outline-danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Delete Comment
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item btn btn-outline-danger" href="@Url.Action("Delete","Comments", new {id = comment.Id})">Delete Comment</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <br />
+            }
+        </div>
+    </div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div>
+                    @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("BlogPostId", Model.Id)
+                        @Html.Hidden("Slug", Model.Slug)
+                        <div>
+                            @* TODO: Text area flexible *@
+                            @Html.TextArea("commentBody", new { rows = 10, cols = 92 })
+                        </div>
+                        <div><br /></div>
+                        <div class=" flex-fill align-self-lg-center">
+                            <button type="submit" class=" btn btn-outline-success w-100">Post Comment</button>
+                        </div>
+
+
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

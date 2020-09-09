@@ -1,0 +1,99 @@
+Keep the goal in mind.
+26th tasks
+
+
+
+https://bugout.azurewebsites.net/
+===============================================================================
+Blog
+===============================================================================
+^^20th unsure
+^^21st unsure
+^^22st Am General explination of how MVC works a few modifications made to blog. PM walk through of Views and Controllers. Discussion of shared layout. Initial carve in and Razer helper discussion.
+^^23st AM First video 22:00 Custom method. Font awsome issues addressed and fixed via min file. PM View bag. Constructiong non scafolded vontroller parts and views. Power goes out
+24th
+
+===============================================================================
+Bug Tracker
+===============================================================================
+
+6th and 7th go over as I never made sure it worked
+compare projects/index: table to any other table
+Carve in by Drew, from the 12th
+
+12th Admin Template Carve in 28:47
+13th video as well, something in zoom, mostly work day
+14th Morning session + Jason video, file upload
+17th Morning video, Evening is Thomas's Question no need for catch up
+18th Morning Added demo login roles and histories. Open forum
+19th login partial continued: starts at 11:30: Evening unsure
+20th Unknown
+21th Unknown
+^24th AM started at 11:08 J recorded as well uploading to Azure. PM work/open form till 5:20 then reflection topic. Evening recorded target migration occured at 4:04 o'clock
+25th AM Morris Charts Jason records a video of how to build this in with live code. Chart.js open form. PM Open form: Very breif recording of Beth fixing bugs. This showed me how to link controllers and views.
+
+Paused 13th Morning at 34:22
+
+===============================================================================
+Bugs and Issues
+===============================================================================
+
+10th Morning
+TicketController line 54 when /tickets/create throws a null error when signed in.
+System.NullReferenceException: in the controller or in the project helper.
+works Need to use as an example to work in other tables.
+
+Project Helper
+lines 62 project helper
+
+10th evening
+index DeveloperID display
+
+Resend Email Confirmation is broken.
+
+blow away Content, fonts readd only needed ones in two templates and Scripts
+
+===============================================================================
+Carve in items left to do
+===============================================================================
+ForgotPassword: field and text
+
+ForgotpasswordConfirmation: field and text + Animation
+
+
+===============================================================================
+Questions
+===============================================================================
+Target migration information How does it work for updating DB
+	Changed the name of a role in my seed. Is this where I would apply this change.
+
+Valid method. Grabbing code from Devtools that was created by Razer and dropping that in instead of the razer code to carve templete elements.
+
+What is #region native to?
+
+Scss Where does it go so my program can properly link to it.
+
+// Do I have these three parts of MVC correct as I understand them.
+The Model is liteally our model it informs the program and the DB what our data looks like or things that are data require.
+The controller takes data as laid out by the model and manipulates it. It communicates data to a view via a HttpGet that is understood and recives data via a HttpPost. Variables can be gained progromatically or via the view and a HttpPost in this part of the model.
+The view works with the final assembly and display of data, It dypically does not modify data but it can organize data provided by a Contoller through several tools. Data modifyed on a view can than be pushed to a controller action via a HttpPost. The view is also where all of our navigation between differnet views is handeled.
+
+@model IEnumerable<Blog.Models.Comment>
+Says in this view the model of data we will be using is. The one in the Blog which is the name of the project, the models for that blog, and the comment model listed in the models. And IEnumberable says we should expect form the controller many of this model type.
+
+// Not sure what these terms are attached to.
+Class definition. Class Level Is blogposts contoller an instance of a class ?
+Name space.
+
+Remove http: from online CSS libraries Why ?
+
+Vissual studio References how to get ride of it.
+
+missed 20 and 21st
+
+
+Local debuggin verses online switching DB's. Making sure I know what version I am running.
+Also I switched the DB to link locally in the web.config. I think.
+(Note for Future me: Yes I know all the fonst are broken or in the wrong file I stopped working on it for reason listed above and making sleep related errors)
+
+Fixing this issue in git before push.

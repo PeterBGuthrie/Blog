@@ -1,0 +1,89 @@
+﻿@model Blog.Models.Comment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/my-life-through-a-lens-bq31L0jQAjU-unsplash.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Watch your language</h1>
+                    <span class="subheading">Time to mop up this mess</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container-fluid page-body-wrapper">
+
+    <h3>Are you sure you want to delete this comment?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Author.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Author.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BlogPost.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BlogPost.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.commentBody)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.commentBody)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Created)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Created)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Updated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Updated)
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.UpdateReason)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UpdateReason)
+                </dd>*@
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+               <a class="btn btn-outline-dark" href=@Url.Action("Index","Comments")>Back to List</a>
+            </div>
+        }
+    </div>
+</div>

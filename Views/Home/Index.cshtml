@@ -1,0 +1,64 @@
+﻿@using Blog.Models
+@model IEnumerable<BlogPost>
+
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/tryHome.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>Dev Journey</h1>
+                    <span class="subheading">One error at a time</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <h4>Closer to a definitive answer on these topics everyday! </h4>
+    <hr />
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @foreach (var post in Model)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        Posted by Peter B. Guthrie on
+                        @post.Created.ToString("MMM dd, yyyy");
+                    </div>
+                    <div class="card-body">
+                        <a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })">
+                            <h2>@post.Title</h2>
+                            <br />
+                            <h6>@post.Abstract</h6>
+                        </a>
+                    </div>
+                </div>
+                <br />
+
+                @*TODO: Avatar*@
+                @*<div class="card bg-dark text-white">
+                <img class="card-img w-60 h-10" src="@post.MediaPath" alt="Card image">
+                <div class="card-img-overlay">
+                    <div class="card-body text-white">
+                        <a href="@Url.Action("Details", "BlogPosts", new { slug = post.Slug })">
+                            <h2 class="">@post.Title</h2>
+                            <br />
+                            <h6>@post.Abstract</h6>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <br />*@
+            }
+        </div>
+
+
+    </div>
+</div>
+

@@ -1,0 +1,128 @@
+﻿@model IPagedList<Blog.Models.BlogPost>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/img/index.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>BlogPosts index</h1>
+                    <span class="subheading">One *more* error at a t1me</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid page-body-wrapper">
+    <h2>Index</h2>
+
+    @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, htmlAttributes: new { @class = "form" }))
+    {
+        <div class="controls controls-row search-row">
+            <input id="searchStr" name="searchStr" class="input-block-level" type="text"
+                   placeholder="Search...">
+            <button id="searchStr" name="searchStr" class="btn btn-success btn-xs" type="submit">
+                search
+            </button>
+        </div>
+    }
+
+    <div>
+        <br />
+        @if (User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-dark" href=@Url.Action("Create")>Create New BlogPost</a>
+        }
+    </div><br />
+    <table class="table row">
+        <tr>
+            <th class="col">
+                @Html.DisplayName("Title")
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Slug)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Body)
+                </th>*@
+            <th class="col">
+                @Html.DisplayName("Abstract")
+            </th>
+            <th class="col">
+                @Html.DisplayName("Created")
+            </th>
+            <th class="col">
+                @Html.DisplayName("Updated")
+            </th>
+            <th class="img-fluid">
+                @Html.DisplayName("Media")
+            </th>
+            <th class="col">
+                @Html.DisplayName("Published")
+            </th>
+            <th class="col"></th>
+        </tr>
+
+        @foreach (var blogPost in Model)
+        {
+            <tr>
+                <td class="">
+                    @Html.DisplayFor(modelItem => blogPost.Title)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => blogPost.Slug)
+                    </td>*@
+                @*<td>
+                        @Html.Raw(blogPost.Body)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => blogPost.Abstract)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blogPost.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blogPost.Updated)
+                </td>
+                <td class="">
+                    @if (blogPost.MediaPath != null)
+                    {
+                        <img class=" img-fluid img-thumbnail" src="@blogPost.MediaPath" alt="">
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => blogPost.Published)
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <a type="button" class="btn btn-outline-dark" href=@Url.Action("Details",null, new { slug = blogPost.Slug })>Blog Post</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Post Controls
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item btn btn-outline-danger" href=@Url.Action("Delete", null, new { id = blogPost.Id })>Delete</a>
+                                    <a class="dropdown-item btn btn-outline-warning" href=@Url.Action("Edit", null, new { id = blogPost.Id })>Edit</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchStr = ViewBag.Search }))
+</div>
+

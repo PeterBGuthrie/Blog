@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNet.Identity
+@using Blog.Helpers;
+@{
+    var UserHelper = new UserHelper();
+}
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href=@Url.Action("Index","Home")>Peter G. DevBlog</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href=@Url.Action("About","Home")>About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href=@Url.Action("Contact", "Home")>Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://www.peterg.info" target="_blank">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                            {
+                                <a class="nav-link" href=@Url.Action("index", "BlogPosts")>Tools</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                        @* TODO: add the simple name here instead *@
+
+                        @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+                            @Html.ActionLink(UserHelper.GetDisplayName(User.Identity.GetUserId()), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    }
+}
+else
+{
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            @*@Html.ActionLink("Peter G. DevBlog", "Index", htmlAttributes: new { @class = "navbar-brand" })*@
+            <a class="navbar-brand" href=@Url.Action("Index","Home")>Peter G. DevBlog</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href=@Url.Action("About","Home")>About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=@Url.Action("Contact", "Home")>Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://www.peterg.info" target="_blank">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            <a class="nav-link" href=@Url.Action("index", "BlogPosts")>Tools</a>
+                        }
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+}

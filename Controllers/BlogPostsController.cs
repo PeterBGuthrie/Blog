@@ -19,7 +19,7 @@ namespace Blog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: BlogPosts
-
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index(int? page, string searchStr)
         {
             ViewBag.search = searchStr;

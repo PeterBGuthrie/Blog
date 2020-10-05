@@ -24,7 +24,7 @@ namespace Blog.Models
         [Display(Name = "Revised On: ")]
         public DateTime? Updated { get; set; }
 
-        // I followed Jason's example using "MediaPath instead of MediaURL"
+        // MediaPath instead of MediaURL
         [Display(Name = "Image Path")]
         public string MediaPath  { get; set; }
         [Display(Name = "Published:")]
